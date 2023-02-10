@@ -1,0 +1,18 @@
+-isa=rxv2
+-MAKEUD="D:\Project\Seperate Code\Stepper_Code\Stepper_Code\HardwareDebug\src\smc_gen\Config_CMT0"
+-include="C:\Program Files (x86)\Renesas\RX\3_4_0\include"
+-include="D:\Project\Seperate Code\Stepper_Code\Stepper_Code\src\smc_gen\r_bsp"
+-include="D:\Project\Seperate Code\Stepper_Code\Stepper_Code\src\smc_gen\r_config"
+-include="D:\Project\Seperate Code\Stepper_Code\Stepper_Code\src\smc_gen\Config_PORT"
+-include="D:\Project\Seperate Code\Stepper_Code\Stepper_Code\src\smc_gen\Config_WDT"
+-include="D:\Project\Seperate Code\Stepper_Code\Stepper_Code\src\smc_gen\Config_CMT0"
+-include="D:\Project\Seperate Code\Stepper_Code\Stepper_Code\src\smc_gen\general"
+-include="D:\Project\Seperate Code\Stepper_Code\Stepper_Code\src\smc_gen\r_pincfg" 
+-lang=c99
+-utf8
+-nomessage
+-output=obj
+-obj_path="src/smc_gen/Config_CMT0"
+-debug
+-outcode=utf8
+-nologo 

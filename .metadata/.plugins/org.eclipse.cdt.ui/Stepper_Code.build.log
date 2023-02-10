@@ -1,0 +1,113 @@
+17:21:32 **** Incremental Build of configuration HardwareDebug for project Stepper_Code ****
+make -j12 all 
+'Scanning and building file: ../src/Stepper_Code.c'
+'Invoking: Scanner and Compiler'
+src\cDepSubCommand.tmp=
+ -MM
+ -MP
+ -isa=rxv2
+ -include="C:\Program Files (x86)\Renesas\RX\3_4_0\include"
+ -include="D:\Project\Seperate Code\Stepper_Code\Stepper_Code\src\smc_gen\r_bsp"
+ -include="D:\Project\Seperate Code\Stepper_Code\Stepper_Code\src\smc_gen\r_config"
+ -include="D:\Project\Seperate Code\Stepper_Code\Stepper_Code\src\smc_gen\Config_PORT"
+ -include="D:\Project\Seperate Code\Stepper_Code\Stepper_Code\src\smc_gen\Config_WDT"
+ -include="D:\Project\Seperate Code\Stepper_Code\Stepper_Code\src\smc_gen\Config_CMT0"
+ -include="D:\Project\Seperate Code\Stepper_Code\Stepper_Code\src\smc_gen\general"
+ -include="D:\Project\Seperate Code\Stepper_Code\Stepper_Code\src\smc_gen\r_pincfg" 
+ -lang=c99
+ -utf8
+ -nomessage
+ -debug
+ -outcode=utf8
+ -optimize=0
+ -nologo
+ccrx -subcommand="src\cDepSubCommand.tmp" -output=dep="src/Stepper_Code.d"  -MT="src/Stepper_Code.obj"  -MT="src/Stepper_Code.d" "../src/Stepper_Code.c"
+src\cSubCommand.tmp=
+ -isa=rxv2
+ -MAKEUD="D:\Project\Seperate Code\Stepper_Code\Stepper_Code\HardwareDebug\src"
+ -include="C:\Program Files (x86)\Renesas\RX\3_4_0\include"
+ -include="D:\Project\Seperate Code\Stepper_Code\Stepper_Code\src\smc_gen\r_bsp"
+ -include="D:\Project\Seperate Code\Stepper_Code\Stepper_Code\src\smc_gen\r_config"
+ -include="D:\Project\Seperate Code\Stepper_Code\Stepper_Code\src\smc_gen\Config_PORT"
+ -include="D:\Project\Seperate Code\Stepper_Code\Stepper_Code\src\smc_gen\Config_WDT"
+ -include="D:\Project\Seperate Code\Stepper_Code\Stepper_Code\src\smc_gen\Config_CMT0"
+ -include="D:\Project\Seperate Code\Stepper_Code\Stepper_Code\src\smc_gen\general"
+ -include="D:\Project\Seperate Code\Stepper_Code\Stepper_Code\src\smc_gen\r_pincfg" 
+ -lang=c99
+ -utf8
+ -nomessage
+ -output=obj
+ -obj_path="src"
+ -debug
+ -outcode=utf8
+ -optimize=0
+ -nologo 
+ccrx -subcommand="src\cSubCommand.tmp" "../src/Stepper_Code.c"
+'Finished Scanning and building: ../src/Stepper_Code.c'
+
+'Invoking: Linker'
+'Building target:'
+LinkerStepper_Code.tmp=
+    -MAKEUD=D:\Project\Seperate Code\Stepper_Code\Stepper_Code\HardwareDebug/Stepper_Code_l.ud
+    -noprelink
+    -input=".\src\Stepper_Code.obj"
+    -input=".\src/smc_gen/Config_CMT0\Config_CMT0.obj"
+    -input=".\src/smc_gen/Config_CMT0\Config_CMT0_user.obj"
+    -input=".\src/smc_gen/Config_PORT\Config_PORT.obj"
+    -input=".\src/smc_gen/Config_PORT\Config_PORT_user.obj"
+    -input=".\src/smc_gen/Config_WDT\Config_WDT.obj"
+    -input=".\src/smc_gen/Config_WDT\Config_WDT_user.obj"
+    -input=".\src/smc_gen/general\r_cg_hardware_setup.obj"
+    -input=".\src/smc_gen/general\r_smc_cgc.obj"
+    -input=".\src/smc_gen/general\r_smc_cgc_user.obj"
+    -input=".\src/smc_gen/general\r_smc_interrupt.obj"
+    -input=".\src/smc_gen/r_bsp/board/generic_rx231\hwsetup.obj"
+    -input=".\src/smc_gen/r_bsp/mcu/all\dbsct.obj"
+    -input=".\src/smc_gen/r_bsp/mcu/all\lowlvl.obj"
+    -input=".\src/smc_gen/r_bsp/mcu/all\lowsrc.obj"
+    -input=".\src/smc_gen/r_bsp/mcu/all\mcu_locks.obj"
+    -input=".\src/smc_gen/r_bsp/mcu/all\r_bsp_common.obj"
+    -input=".\src/smc_gen/r_bsp/mcu/all\r_bsp_cpu.obj"
+    -input=".\src/smc_gen/r_bsp/mcu/all\r_bsp_interrupts.obj"
+    -input=".\src/smc_gen/r_bsp/mcu/all\r_bsp_locking.obj"
+    -input=".\src/smc_gen/r_bsp/mcu/all\r_bsp_mcu_startup.obj"
+    -input=".\src/smc_gen/r_bsp/mcu/all\r_bsp_software_interrupt.obj"
+    -input=".\src/smc_gen/r_bsp/mcu/all\r_rx_intrinsic_functions.obj"
+    -input=".\src/smc_gen/r_bsp/mcu/all\resetprg.obj"
+    -input=".\src/smc_gen/r_bsp/mcu/all\sbrk.obj"
+    -input=".\src/smc_gen/r_bsp/mcu/rx231\mcu_clocks.obj"
+    -input=".\src/smc_gen/r_bsp/mcu/rx231\mcu_init.obj"
+    -input=".\src/smc_gen/r_bsp/mcu/rx231\mcu_interrupts.obj"
+    -input=".\src/smc_gen/r_bsp/mcu/rx231\r_bsp_vbatt.obj"
+    -input=".\src/smc_gen/r_bsp/mcu/rx231\vecttbl.obj"
+    -input=".\src/smc_gen/r_pincfg\Pin.obj"
+    -library=".\Stepper_Code.lib"
+    -start=SU,SI,B_1,R_1,B_2,R_2,B,R/04,C_1,C_2,C,C$*,D*,W*,L,P*/0FFFE0000,EXCEPTVECT/0FFFFFF80,RESETVECT/0FFFFFFFC
+    -output="Stepper_Code.abs"
+    -form=absolute
+    -nomessage
+    -vect=_undefined_interrupt_source_isr
+    -list=Stepper_Code.map
+    -nooptimize
+    -rom=D=R,D_1=R_1,D_2=R_2
+    -cpu=RAM=00000000-00007fff,FIX=00080000-00083fff,FIX=00086000-00087fff,FIX=00088000-0008dfff,FIX=00090000-0009ffff,FIX=000a0000-000bffff,FIX=000c0000-000fffff,ROM=00100000-00101fff,FIX=007fc000-007fc4ff,FIX=007ffc00-007fffff,ROM=fffe0000-ffffffff
+    -nologo
+rlink -subcommand="LinkerStepper_Code.tmp"
+
+W0561017:The evaluation period of CC-RX V3 has expired. Please consider purchasing the product.
+
+Renesas Optimizing Linker Completed
+'Finished building target:'
+
+C:\Users\COE04\.eclipse\com.renesas.platform_1435879475\Utilities\\ccrx\renesas_cc_converter.exe Stepper_Code.abs Stepper_Code.x
+udcollector -subcommand=udSubcommand.tmp -output=Stepper_Code.udm
+Loading input file Stepper_Code.abs
+Parsing the ELF input file.....
+24 segments required LMA fixes
+Converting the DWARF information....
+Constructing the output ELF image....
+Saving the ELF output file Stepper_Code.x
+'Build complete.'
+
+17:21:33 Build Finished. 0 errors, 1 warnings. (took 1s.13ms)
+

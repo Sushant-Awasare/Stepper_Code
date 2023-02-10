@@ -1,0 +1,17 @@
+/***********************************************************************
+*
+*  FILE        : Stepper_Code.c
+*  DATE        : 2023-01-24
+*  DESCRIPTION : Main Program
+*
+*  NOTE:THIS IS A TYPICAL EXAMPLE.
+*
+***********************************************************************/
+#include "r_smc_entry.h"
+
+void main(void);
+
+void main(void)
+{
+
+}

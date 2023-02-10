@@ -1,0 +1,71 @@
+/***********************************************************************
+*
+*  FILE        : Stepper_Code.c
+*  DATE        : 2023-01-24
+*  DESCRIPTION : Main Program
+*
+*  NOTE:THIS IS A TYPICAL EXAMPLE.
+*
+***********************************************************************/
+#include "r_smc_entry.h"
+#include "Config_CMT0.h"
+#include "r_cg_userdefine.h"
+#include "stepper_variables.h"
+
+
+void Trigger_FB_old(void);
+//unsigned int FB_Speed_old[1][6] = {500,750,600,900,600,400};   // 631ms
+
+//unsigned int FB_Speed_old1[1][6] = {750,800,600,900,500,400};   // 631ms
+//unsigned int FB_Speed_old2[1][6] = {725,775,575,900,475,400};  //  618.5ms
+//unsigned int FB_Speed_old3[1][6] = {700,750,550,900,450,400};  //  606ms
+//unsigned int FB_Speed_old4[1][6] = {600,600,600,900,600,400}; //   570ms
+unsigned int FB_Speed_Reverse[1][10] = //{400,450,500,550,400,450,550}; //original
+									  {400,450,500,550,400,900,550};
+unsigned int FB_Speed_old[5][6] = {//{500,750,800,600,600,500},  // as per yamato
+									{500,750,600,900,600,400},  // current running
+									//{750,600,500,900,600,400},
+									//{500,333,312,416,416,500},   // for trial purpose on 18/11/22
+								   {725,775,575,900,475,400},
+								   {700,750,550,900,450,400},
+								   {600,600,600,900,600,400}};
+void Clear_Watchdog();
+void Delay_Loop(unsigned long int Cntr);
+
+void main(void)
+{
+	R_Config_CMT0_Start();
+
+	while(1)
+	{
+		ENB_FB = 1;
+		DIR_FB = 0;
+		CMT0.CMCOR = 300;
+		Delay_Loop(500);
+		ENB_FB = 1;
+		DIR_FB = 1;
+		CMT0.CMCOR = 600;
+		Delay_Loop(500);
+	}
+}
+
+void Trigger_FB_old(void)
+{
+	Clear_Watchdog();		// Clear watch dog timer and reset
+	CLK_FB ^= 1;
+
+}
+
+
+void Clear_Watchdog()
+{
+	R_Config_WDT_Restart();
+}
+
+void Delay_Loop(unsigned long int Cntr)
+{
+	unsigned long int i,j;
+	for(i=0; i<=Cntr; i++)
+	 for(j = 0; j <= 100; j++);
+}
+

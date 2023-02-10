@@ -1,0 +1,272 @@
+/***********************************************************************
+*
+*  FILE        : Stepper_Code.c
+*  DATE        : 2023-01-24
+*  DESCRIPTION : Main Program
+*
+*  NOTE:THIS IS A TYPICAL EXAMPLE.
+*
+***********************************************************************/
+#include "r_smc_entry.h"
+#include "Config_CMT0.h"
+#include "r_cg_userdefine.h"
+#include "stepper_variables.h"
+
+
+void Trigger_FB_old(void);
+//unsigned int FB_Speed_old[1][6] = {500,750,600,900,600,400};   // 631ms
+
+//unsigned int FB_Speed_old1[1][6] = {750,800,600,900,500,400};   // 631ms
+//unsigned int FB_Speed_old2[1][6] = {725,775,575,900,475,400};  //  618.5ms
+//unsigned int FB_Speed_old3[1][6] = {700,750,550,900,450,400};  //  606ms
+//unsigned int FB_Speed_old4[1][6] = {600,600,600,900,600,400}; //   570ms
+unsigned int FB_Speed_Reverse[1][10] = //{400,450,500,550,400,450,550}; //original
+									  {400,450,500,550,400,900,550};
+unsigned int FB_Speed_old[5][6] = {//{500,750,800,600,600,500},  // as per yamato
+									{500,750,600,900,600,400},  // current running
+									//{750,600,500,900,600,400},
+									//{500,333,312,416,416,500},   // for trial purpose on 18/11/22
+								   {725,775,575,900,475,400},
+								   {700,750,550,900,450,400},
+								   {600,600,600,900,600,400}};
+void Clear_Watchdog();
+void main(void)
+{
+	R_Config_CMT0_Start();
+}
+
+void Trigger_FB_old(void)
+{
+	Clear_Watchdog();		// Clear watch dog timer and reset
+
+	if(homing_flag_fb == 1)
+	{
+		/*if(HIN_FB == 0)
+		{
+			DIR_FB = 1;
+			FB_Clk_Pulses  = 0;
+			ENB_FB         = 0;
+			Flag_FB_Trig   = 0;
+			DSidx          = 0;
+			CLK_FB         = 0;
+			shift_speed_row_FB = 0;
+			homing_flag_fb = 0;
+			CMT2.CMCOR = _0289_CMT2_CMCOR_VALUE;
+
+		}
+		else*/
+
+	}
+	else if(Flag_FB_Trig == 1)
+	{
+		if(STEPPER_PATTERN == 0)
+		{
+			MotoPro = 0;
+		}
+		else if(STEPPER_PATTERN == 1)
+		{
+			MotoPro = 1;
+		}
+		else if(STEPPER_PATTERN == 2)
+		{
+			MotoPro = 2;
+		}
+		else if(STEPPER_PATTERN == 3)
+		{
+			MotoPro = 3;
+		}
+
+		if(STEPPER_PATTERN == 4)
+		{
+			MotoPro = 0;
+
+			if(FB_Clk_Pulses < 10)
+			{
+				DSidx = 0;
+				CMT0.CMCOR = FB_Speed_Reverse[MotoPro][DSidx];
+			}
+			else if(FB_Clk_Pulses >=10 && FB_Clk_Pulses < 160)
+			{
+				DSidx = 1;
+				CMT0.CMCOR = FB_Speed_Reverse[MotoPro][DSidx];
+			}
+			else if(FB_Clk_Pulses >=160 && FB_Clk_Pulses < 200)
+			{
+				DSidx = 2;
+				CMT0.CMCOR = FB_Speed_Reverse[MotoPro][DSidx];
+			}
+			else if(FB_Clk_Pulses >=200 && FB_Clk_Pulses < 210)
+			{
+				DSidx = 3;
+				CMT0.CMCOR = FB_Speed_Reverse[MotoPro][DSidx];
+			}
+			else if(FB_Clk_Pulses >=210 && FB_Clk_Pulses < 220)
+			{
+				DSidx = 4;
+				CMT0.CMCOR = FB_Speed_Reverse[MotoPro][DSidx];
+			}
+			else if(FB_Clk_Pulses >=220 && FB_Clk_Pulses < 390)
+			{
+				DSidx = 5;
+				CMT0.CMCOR = FB_Speed_Reverse[MotoPro][DSidx];
+			}
+			else if(FB_Clk_Pulses >=390 && FB_Clk_Pulses < MAXPULSES)
+			{
+				DSidx = 6;
+				CMT0.CMCOR = FB_Speed_Reverse[MotoPro][DSidx];
+			}
+			CLK_FB ^= 1;
+		}
+		else
+		{
+			if(FB_Clk_Pulses < 10)
+			{
+				DSidx = 0;
+				CMT0.CMCOR = FB_Speed_old[MotoPro][DSidx];
+			}
+			else if(FB_Clk_Pulses >=10 && FB_Clk_Pulses < 160)
+			{
+				DSidx = 1;
+				CMT0.CMCOR = FB_Speed_old[MotoPro][DSidx];
+			}
+			else if(FB_Clk_Pulses >=160 && FB_Clk_Pulses < 240)
+			{
+				DSidx = 2;
+				CMT0.CMCOR = FB_Speed_old[MotoPro][DSidx];
+			}
+			else if(FB_Clk_Pulses >=240 && FB_Clk_Pulses < 390)
+			{
+				DSidx = 3;
+				CMT0.CMCOR = FB_Speed_old[MotoPro][DSidx];
+			}
+			else if(FB_Clk_Pulses >=390 && FB_Clk_Pulses < MAXPULSES)
+			{
+				DSidx = 4;
+				CMT0.CMCOR = FB_Speed_old[MotoPro][DSidx];
+			}
+			CLK_FB ^= 1;
+		}
+
+	/*if((Flag_FB_Trig == 1)&&(Flag_FB_Trig_Edge == 0))
+	{
+		FB_OD_TMR = FB_OD_Time;	// Set the open Delay for the FeedBucket
+		Flag_FB_OD_TMR = 0;
+		Flag_FB_Trig_Edge = 1;	// Set the Edge flag of the FeedBucket Trigger Flag
+	}
+	else if((FB_OD_TMR == 0)&&(Flag_FB_Trig == 1)&&(Flag_FB_OD_TMR == 0)&&(Flag_FB_Trig_Edge == 1))	//
+	{
+		FB_Clk_Pulses   = 0;
+		ENB_FB          = 1;
+		FB_OT_TMR       = 0;
+		Flag_FB_Stage1  = 0;
+		Flag_FB_Stage3  = 0;
+
+		if(Flag_Run == 1)
+			fb_dump_confirmation_flag = 1;
+
+		Flag_FB_OD_TMR  = 1;
+	}
+
+	if((FB_Clk_Pulses <= MAXPULSES)&&(FB_OT_TMR == 0)&&(ENB_FB == 1)) // for old stepper driver
+	{
+		CLK_FB ^= 1;
+
+		if(CLK_FB == 1)
+		{
+			FB_Clk_Pulses++;
+			FB_Angle_Ptr++;
+			if(fb_home_detected_flag == 1)
+				extra_fb_pulses++;
+		}
+	}
+
+	if((FB_Clk_Pulses > 200)&&(Flag_FB_Stage1 == 0))	//300//fire timer open timer at full open (180Deg)
+	{
+			FB_OT_TMR = FB_OT_Time;
+
+			if(CAN_SlaveID == 15 || STEPPER_PATTERN == 4)
+			{
+				DIR_FB         = 0;
+			}
+
+			Flag_FB_OT_TMR = 1;
+			Flag_FB_Stage1 = 1;
+	}
+
+	if((FB_OT_TMR == 0)&&(Flag_FB_OT_TMR == 1))
+	{
+			Flag_FB_Stage2 = 1;
+			Flag_FB_Status=1;
+			Flag_FB_OT_TMR = 0;
+	}
+
+	if((FB_Clk_Pulses > 370)&&(Flag_FB_Stage2 == 1)&&(Flag_FB_Stage3 == 0))   //400
+	{
+		Flag_FB_Stage3 = 1;
+		Flag_FB_Stage2 = 0;
+	}
+
+
+	if((HIN_FB == 0)&&(Flag_FB_Stage3 == 1)&& fb_home_detected_flag == 0)  //||(FB_Clk_Pulses >= MAXPULSES))		//check homing after stage 3
+	{
+		Clear_Watchdog();
+		fb_home_detected_flag = 1;
+		extra_fb_pulses = 0;
+
+	}
+	//else if((FB_Clk_Pulses >= MAXPULSES)  && (Flag_FB_Stage3 == 1) && (fb_home_detected_flag == 0))
+	else if((FB_Clk_Pulses >= MAXPULSES)  && (Flag_FB_Stage3 == 1))
+	{
+		Clear_Watchdog();
+		t00 = 0;
+		ENB_FB             = 0;  // for old stepper driver
+		Flag_FB_Trig       = 0;
+		fb_home_detected_flag = 0;
+		DIR_FB = 1;
+		pulses_buff[v]    = FB_Clk_Pulses;
+		v++;
+		if(v>100)
+			v= 0;
+
+		FB_Clk_Pulses      = 0;
+		CLK_FB             = 0;
+		Flag_FB_OD_TMR     = 0;
+		Flag_FB_OT_TMR     = 0;
+		Flag_FB_Stage1     = 0;
+		Flag_FB_Stage2     = 0;
+		Flag_FB_Stage3     = 0;
+		ManOpr_FB_Flag  = 0;
+		CMT2.CMCOR = _0289_CMT2_CMCOR_VALUE;
+	}
+
+	if(fb_home_detected_flag == 1 && extra_fb_pulses >= 6 )
+	{
+		ENB_FB             = 0;  // for old stepper driver
+		t00                = 0;
+		Flag_FB_Trig       = 0;
+		fb_home_detected_flag = 0;
+		DIR_FB = 1;
+
+		pulses_buff[v]    = FB_Clk_Pulses;
+		v++;
+		if(v>100)
+			v= 0;
+		FB_Clk_Pulses      = 0;
+		CLK_FB             = 0;
+		Flag_FB_OD_TMR     = 0;
+		Flag_FB_OT_TMR     = 0;
+		Flag_FB_Stage1     = 0;
+		Flag_FB_Stage2     = 0;
+		Flag_FB_Stage3     = 0;
+		ManOpr_FB_Flag  = 0;
+		CMT2.CMCOR = _0289_CMT2_CMCOR_VALUE;
+	}*/
+
+	}
+}
+
+
+void Clear_Watchdog()
+{
+	R_Config_WDT_Restart();
+}

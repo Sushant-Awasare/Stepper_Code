@@ -1,0 +1,6 @@
+-MAKEUD_LBG="D:\Project\Seperate Code\Stepper_Code\Stepper_Code\HardwareDebug\\Stepper_Code_lbg.ud"
+-isa=rxv2
+-lang=c99
+-head=runtime,stdio,stdlib,string,new
+-output="Stepper_Code.lib"
+-nologo
